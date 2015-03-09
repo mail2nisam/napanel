@@ -36,7 +36,6 @@ Route::pattern('token', '[0-9a-z]+');
  */
 Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
 {
-
     # Comment Management
     Route::get('comments/{comment}/edit', 'AdminCommentsController@getEdit');
     Route::post('comments/{comment}/edit', 'AdminCommentsController@postEdit');
@@ -67,9 +66,11 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     Route::get('roles/{role}/delete', 'AdminRolesController@getDelete');
     Route::post('roles/{role}/delete', 'AdminRolesController@postDelete');
     Route::controller('roles', 'AdminRolesController');
-
+    Route::resource('models', 'ModelsController');
     # Admin Dashboard
+    
     Route::controller('/', 'AdminDashboardController');
+    
 });
 
 
@@ -77,7 +78,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
  *  Frontend Routes
  *  ------------------------------------------
  */
-
+Route::resource('models', 'ModelsController');
 // User reset routes
 Route::get('user/reset/{token}', 'UserController@getReset');
 // User password reset
@@ -109,3 +110,6 @@ Route::post('{postSlug}', 'BlogController@postView');
 
 # Index Page - Last route, no matches
 Route::get('/', array('before' => 'detectLang','uses' => 'BlogController@getIndex'));
+
+
+
